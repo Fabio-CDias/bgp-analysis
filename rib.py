@@ -8,9 +8,21 @@ def add_neighbor(current,next_neighbor,prev_neighbor,ipver):
         if value is not None and value not in ipver[current]:
             ipver[current].add(value)
 
+    
+    # if current not in ipver:
+    #     ipver[current] = []
+    # if next_neighbor is not None and next_neighbor not in ipver[current]:
+    #     ipver[current].append(next_neighbor)
+    # if prev_neighbor is not None and prev_neighbor not in ipver[current]:
+    #     ipver[current].append(prev_neighbor)
+
+    # for value in (next_neighbor,prev_neighbor):
+    #     if value is not None and value not in ipver[current]:
+    #         ipver[current].append(value)
+
 # Defines and maps the neighbors as: Previous AS | (Current AS) | Next AS
 def set_neighbors(neighbor_list,ipver):
-    for i in range(len(neighbor_list)-1):
+    for i in range(len(neighbor_list)):
         prev_neighbor = neighbor_list[i-1] if (i - 1 >= 0) and (neighbor_list[i-1] != neighbor_list[i]) else None
         next_neighbor = neighbor_list[i+1] if (i + 1 < len(neighbor_list)) and (neighbor_list[i+1] != neighbor_list[i]) else None
         add_neighbor(neighbor_list[i],prev_neighbor,next_neighbor,ipver)
@@ -41,4 +53,4 @@ def rib(directory,file):
     v6_key = set(ipv6.keys()) - set(ipv4.keys())
    
     export.txt(ipv4,ipv6,file)
-    export.summary(ipv4,ipv6,v4_key,v6_key,common_key,file) 
+    export.summary(ipv4,ipv6,file) 

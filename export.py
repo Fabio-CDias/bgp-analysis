@@ -19,23 +19,33 @@ def txt(ipv4,ipv6,file):
         f.write(format(ipv6,v="ipv6"))
 
 # ipv4,ipv6 = dict of all ASes based on ipversion
-# v4,v6,both = only ipv4, only ipv6, both ipversion Keys
-def summary(ipv4,ipv6,v4_key,v6_key,both_key,file):
+# v4,v6,both = only ipv4, only ipv6, both ipversion Keys            
+def summary(ipv4,ipv6,file):
     path = os.path.join("result",f"Summary_{file}")
     os.makedirs("result",exist_ok=True)
     if os.path.exists(path): os.remove(path)
+
+    common_AS = set(ipv4.keys()) & set(ipv6.keys())
+    v4_only = set(ipv4.keys()) - set(ipv6.keys())
+    v6_only = set(ipv6.keys()) - set(ipv4.keys())
+
     with open(path,"w") as f:  
-        for v4 in v4_key:
-            line = f"=|{v4}|{len(ipv4[v4])}|0|0\n"
+
+        for v4 in v4_only:
+            line = f"=|{v4}|{len(ipv4[v4])}|0|0|0|0|0\n"
             f.write(line)
-        for v6 in v6_key:
-            line = f"=|{v6}|0|{len(ipv6[v6])}|0\n"
+        for v6 in v6_only:
+            line = f"=|{v6}|0|{len(ipv6[v6])}|0|0|0|0\n"
             f.write(line)
-        for both in both_key:
-            equal = set(ipv4[both]) & set(ipv6[both])
-            line = f"=|{both}|{len(ipv4[both])}|{len(ipv6[both])}|{len(equal)}\n"
+        
+        for key in common_AS:
+            intersection = set(ipv4[key]) & set(ipv6[key])
+            union = set(ipv4[key]) | set(ipv6[key])
+            v4_diff = set(ipv4[key]) - set(ipv6[key])
+            v6_diff = set(ipv6[key]) - set(ipv4[key])
+            line = f"=|{key}|{len(ipv4[key])}|{len(ipv6[key])}|{len(intersection)}|{len(union)}|{len(v4_diff)}|{len(v6_diff)}\n"
             f.write(line)
-       
+
 
 
 

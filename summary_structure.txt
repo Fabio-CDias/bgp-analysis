@@ -1,0 +1,31 @@
+Formato
+=|AS|q IPV4|q IPV6|q v4∩v6|q v4Uv6|q v4-v6|q v6-v4
+
+(Legenda)
+q = quantidade de ASes vizinhos.
+AS = Analise do respectivo AS.
+v4∩v6 = interseção de ASes vizinhos.
+v4Uv6 = união de ASes vizinhos.
+v4-v6 = diferença de ASes vizinhos entre v4 e v6.
+v6-v4 = diferença de ASes vizinhos entre v6 e v4.
+
+
+-Exemplo:
+        ~AS~        ~Vizinhos~
+ipv4:{  12345   :   {12,23,34},
+        6789    :   {21,32},
+        ...     :   {...},        
+}
+        ~AS~        ~Vizinhos~
+ipv6:{  12345   :   {100,23,5,20,30},
+        2211    :   {200,340},
+        ...     :   {...},           
+}
+
+AS        = 12345
+q IPV4    = 12345:{12,23,34}              q: 3
+q IPV6    = 12345:{100,23,5,20,30}        q: 5
+q v4∩v6   = 12345:{23}                    q: 1 - Se interseção == união: interseção completa
+q v4Uv6   = 12345:{12,23,34,100,5,20,30}  q: 7 /
+q v4-v6   = 12345:{12,34}                 q: 2
+q v6-v4   = 12345:{100,5,20,30}           q: 4
