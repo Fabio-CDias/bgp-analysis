@@ -4,6 +4,7 @@ import os
 if __name__ == "__main__":
     directory = "data"
     zipfiles = tty.scan_directory(directory)
+    zipfiles= sorted(zipfiles)
     s = len(zipfiles)
     for file in zipfiles:
         print(s,"N of files")

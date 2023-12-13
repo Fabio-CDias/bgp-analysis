@@ -1,4 +1,4 @@
-Formato
+Formato summary_structure
 =|AS|q IPV4|q IPV6|q v4∩v6|q v4Uv6|q v4-v6|q v6-v4
 
 (Legenda)
@@ -26,6 +26,6 @@ AS        = 12345
 q IPV4    = 12345:{12,23,34}              q: 3
 q IPV6    = 12345:{100,23,5,20,30}        q: 5
 q v4∩v6   = 12345:{23}                    q: 1 - Se interseção == união: interseção completa
-q v4Uv6   = 12345:{12,23,34,100,5,20,30}  q: 7 /
+q v4Uv6   = 12345:{12,23,34,100,5,20,30}  q: 7
 q v4-v6   = 12345:{12,34}                 q: 2
 q v6-v4   = 12345:{100,5,20,30}           q: 4

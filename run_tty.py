@@ -1,10 +1,10 @@
 import subprocess
 import os
-def scan_directory(directory):
+def scan_directory(directory,ext=".bz2"):
     files = []
     for filename in os.listdir(directory):
         path = os.path.join(directory,filename)
-        if ".bz2" in filename and os.path.isfile(path):
+        if ext in filename and os.path.isfile(path):
             files.append(path)
     return files
 
