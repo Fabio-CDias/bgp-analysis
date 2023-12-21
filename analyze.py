@@ -1,8 +1,8 @@
 # This script generates the plot images
-
 import pandas as pd
 import matplotlib.pyplot as plt
 from run_tty import scan_directory
+
 
 files= scan_directory("result/Summary",ext=".txt")
 files= sorted(files)
@@ -21,6 +21,7 @@ for f in files:
     df = df.drop(0, axis=1)
     df = df.rename(columns={1: "AS", 2: "IPV4", 3: "IPV6", 4: "intersection_v4v6", 5: "union_v4v6", 6: "diff_v4v6", 7: "diff_v6v4"})
     df["date"] = pd.to_datetime(date, format='%Y%m%d')
+    df["type"],df["location"] = None,None
 
     df['IPV4'] = pd.to_numeric(df['IPV4'], errors='coerce')
     df['IPV6'] = pd.to_numeric(df['IPV6'], errors='coerce')
@@ -32,8 +33,8 @@ for f in files:
     df["bool_union_v4v6"] = ( (df["diff_v4v6"] == 0) & (df["diff_v6v4"] == 0) & (df["union_v4v6"] > 0) )
 
     len_AS = pd.DataFrame({"date": [df["date"].iloc[0]], "len_AS": (df["AS"]).count()})
-    len_IPV4 = pd.DataFrame({"date": [df["date"].iloc[0]], "len_IPV4": (df["IPV4"] >0).sum()})
-    len_IPV6 = pd.DataFrame({"date": [df["date"].iloc[0]], "len_IPV6": (df["IPV6"] >0).sum()})
+    len_IPV4 = pd.DataFrame({"date": [df["date"].iloc[0]],"len_IPV4": ((df["IPV4"] > 0) & (df["IPV6"] == 0)).sum()})
+    len_IPV6 = pd.DataFrame({"date": [df["date"].iloc[0]],"len_IPV6": ((df["IPV6"] > 0) & (df["IPV4"] == 0)).sum()})
     len_intersection_v4v6 = pd.DataFrame({"date": [df["date"].iloc[0]], "len_intersection_v4v6": (df["intersection_v4v6"]>0).sum()})
     len_union_v4v6 = pd.DataFrame({"date": [df["date"].iloc[0]],"len_union_v4v6": df.loc[df["bool_union_v4v6"], "union_v4v6"].count()})
     len_diff_v4v6 = pd.DataFrame({"date": [df["date"].iloc[0]], "len_diff_v4v6": (df["diff_v4v6"] > df["diff_v6v4"]).sum()})
@@ -46,8 +47,7 @@ for f in files:
     df_union_v4v6 = pd.concat([df_union_v4v6, len_union_v4v6], ignore_index=True)
     df_diff_v4v6 = pd.concat([df_diff_v4v6, len_diff_v4v6], ignore_index=True)
     df_diff_v6v4 = pd.concat([df_diff_v6v4, len_diff_v6v4], ignore_index=True)
-    
-    
+
 # TOTAL AS
 plt.figure(figsize=(20, 10))
 plt.plot(df_AS['date'], df_AS['len_AS'], label='Total ASes', linestyle='-')

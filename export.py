@@ -1,5 +1,4 @@
 import os
-
 def format(ipver,v):
     line=""
     for i in ipver.items():

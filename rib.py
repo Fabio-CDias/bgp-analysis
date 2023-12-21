@@ -1,6 +1,6 @@
 import export
 import os
-# Adds the observed AS(current) and its neighbors to a dict.
+# Adds the observed AS(current) and its neighbors, to a dict.
 def add_neighbor(current,next_neighbor,prev_neighbor,ipver):
     if current not in ipver:
         ipver[current] = set()
@@ -35,10 +35,6 @@ def rib(directory,file):
                             set_neighbors(neighbors_list,ipv6)
             except ValueError:
                 print("ERROR: ",ValueError)
-
-    common_key = set(ipv4.keys()) & set(ipv6.keys())
-    v4_key = set(ipv4.keys()) - set(ipv6.keys())
-    v6_key = set(ipv6.keys()) - set(ipv4.keys())
    
     export.txt(ipv4,ipv6,file)
     export.summary(ipv4,ipv6,file) 

@@ -1,2 +1,2 @@
 Formato
-=|ip versão|AS|ASes vizinhos
+=|ip version|AS|ASes neighborhood

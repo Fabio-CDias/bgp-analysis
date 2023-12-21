@@ -1,7 +1,10 @@
 from rib import rib
+from wgetRibs import downloadRibs
 import run_tty as tty
 import os
 if __name__ == "__main__":
+    print("Downloading Ribs")
+    downloadRibs(month = ["01","04","07","10"],year = 2019,day = "15.0000.bz2",final_year=2023)
     directory = "data"
     zipfiles = tty.scan_directory(directory)
     zipfiles= sorted(zipfiles)
